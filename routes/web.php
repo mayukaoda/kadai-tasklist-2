@@ -11,16 +11,16 @@
 |
 */
 
-Route::get('/', 'Taskcontroller@index');
+Route::get('/', 'TasklistsController@index');
+Route::resource('tasks', 'TasklistsController');
+
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
+
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login.post');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
-Route::resource('tasks', 'Taskcontroller');
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
+    Route::resource('tasklists', 'TasklistsController', ['only' => ['store', 'destroy']]);
 });

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
+class TasklistsController extends Controller
 {
     public function index()
     {
@@ -33,7 +33,7 @@ class TaskController extends Controller
             'content' => $request->content,
         ]);
 
-        return redirect('/');
+        return redirect('/home');
     }
     public function destroy($id)
     {
