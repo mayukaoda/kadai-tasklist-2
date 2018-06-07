@@ -1,48 +1,107 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
-class TaskController extends Controller
+use App\Http\Requests;
+use App\Task;
+class Taskcontroller extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $data = [];
-        if (\Auth::check()) {
-            $user = \Auth::user();
-            $tasklists = $user->tasklists()->orderBy('created_at', 'desc')->paginate(10);
-
-            $data = [
-                'user' => $user,
-                'tasklists' => $tasklists,
-            ];
-            $data += $this->counts($user);
-            return view('users.show', $data);
-        }else {
-            return view('welcome');
-        }
+        $tasks = Task::all();
+        return view('tasks.index', [
+            'tasks' => $tasks,
+        ]);
     }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $task = new Task;
+        return view('tasks.create', [
+            'task' => $task,
+        ]);
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'content' => 'required|max:191',
+            'status' => 'required|max:10',
         ]);
-
-        $request->user()->tasklists()->create([
-            'content' => $request->content,
-        ]);
-
+        
+        $task = new Task;
+        $task->status = $request->status;
+        $task->content = $request->content;
+        $task->save();
         return redirect('/');
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $task = Task::find($id);
+        return view('tasks.show', [
+            'task' => $task,
+        ]);
+    }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $task = Task::find($id);
+        
+        return view('tasks.edit', [
+            'task' => $task,
+        ]);
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'status' => 'required|max:10',
+        ]);
+        
+        $task = Task::find($id);
+        $task->content = $request->content;
+        $task->save();
+        return redirect('/');
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
-        $micropost = \App\Tasklist::find($id);
-
-        if (\Auth::user()->id === $tasklist->user_id) {
-            $tasklisst->delete();
-        }
-
-        return redirect()->back();
+        $task = Task::find($id);
+        $task->delete();
+        return redirect('/');
     }
 }
