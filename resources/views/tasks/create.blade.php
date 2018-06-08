@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@if (Auth::check())
     <h1>タスク新規作成ページ</h1>
 
 <div class="row">
@@ -23,4 +24,8 @@
     
         </div>
 </div>
+
+@else
+{{print "あなたにはアクセス権限がありません。"}}
+@endif
 @endsection

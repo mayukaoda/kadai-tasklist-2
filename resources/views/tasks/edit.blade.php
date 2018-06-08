@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if (Auth::user()->id == $task->user_id)
     <h1>id: {{ $task->id }} の編集ページ</h1>
 
 <div class="row">
@@ -22,4 +22,8 @@
             {!! Form::close() !!}
         </div>
 </div>
+@else
+{{print "あなたにはアクセス権限がありません"}}
+@endif
+
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if (Auth::user()->id == $task->user_id)
 <!-- Write content for each page here -->
    <h1>id = {{ $task->id }} のタスク詳細ページ</h1>
    
@@ -25,4 +25,8 @@
      {!! Form::model($task, ['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
         {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
+    
+@else
+{{print "あなたにはアクセス権限がありません。"}}
+@endif    
 @endsection

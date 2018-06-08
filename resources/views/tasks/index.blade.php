@@ -24,5 +24,5 @@
             </tbody>
         </table>
     @endif
-    <a class="btn btn-primary btn-sm" href="{{ route('tasks.create') }}"><span stytasks.createle="color:#11569E" class='glyphicon glyphicon-plus'></span>  新規タスクの投稿</a>
+    <a class="btn btn-primary btn-sm" href="{{ route('tasks.create') }}"><span tasks.create="color:#11569E" class='glyphicon glyphicon-plus'></span>  新規タスクの投稿</a>
 @endsection

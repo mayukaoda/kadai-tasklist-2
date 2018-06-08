@@ -6,8 +6,8 @@
             <aside class="col-md-4">
             </aside>
             <div class="col-xs-8">
-                @if (count($tasklists) > 0)
-                    @include('tasklists.tasklists', ['tasklists' => $tasklists])
+                @if (count($tasks) > 0)
+                    @include('tasks.tasks', ['tasks' => $tasks])
                 @endif
             </div>
         </div>
