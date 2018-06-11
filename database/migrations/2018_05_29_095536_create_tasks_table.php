@@ -18,10 +18,11 @@ class CreateTasksTable extends Migration
             $table->string('content');
             $table->string('status', 10);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
-    /**
+    /**     
      * Reverse the migrations.
      *
      * @return void
